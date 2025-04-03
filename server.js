@@ -13,7 +13,7 @@ mongoose.connect(process.env.MONGO_URI, {
     useUnifiedTopology: true
     }).then(() => console.log("MongoDB connecté"))
     .catch(err => console.log(err));
- // Routes
+ // Routes pppppp
 app.use('/client', require('./routes/clientRoutes'));
 app.use('/manager', require('./routes/managerRoutes'));
 app.use('/marque', require('./routes/marqueRoutes'));
