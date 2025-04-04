@@ -24,7 +24,7 @@ router.get('/protected', verifyToken, (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, mdp } = req.body;
-
+  console.log(req.body);
   try {
     const manager = await Manager.findOne({ email, mdp });
     
@@ -32,7 +32,8 @@ router.post('/login', async (req, res) => {
       return res.status(404).json({ message: 'Manager non trouvé ou mot de passe incorrect' });
     }
     const token = jwt.sign( { _id: manager._id, email: manager.email , nom: manager.nom , prenom: manager.prenom },SECRET_KEY,{ expiresIn: '1h' });
-    res.json({ success: true, message: 'Bienvenue',token });
+    console.log(token)
+    res.json({ success: true, message: 'Bienvenue',token: token });
   } catch (err) {
     res.status(500).json({ message: 'Erreur serveur' });
   }

@@ -4,7 +4,7 @@ const MecanicienSchema = new mongoose.Schema({
     prenom: { type: String, required: true },
     email: { type: String, required: true },
     mdp: { type: String, required: true },
-    datedenaissannce: { type: Date, required: true },
+    datedenaissance: { type: Date, required: true },
     manager_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Manager', required: true },
     salaire: {type: mongoose.Schema.Types.Decimal128, required: true },
 }, { timestamps: true });
