@@ -15,7 +15,16 @@ router.post('/Creation', async (req, res) => {
 
 router.get('/Recuperation', async (req, res) => {
     try {
-    const voitures = await Voiture.find();
+    const voitures = await Voiture.find().populate('marque_id');
+    res.json(voitures);
+    } catch (error) {
+    res.status(500).json({ message: error.message });
+    }
+});
+router.get('/Recuperation/:marque_id', async (req, res) => {
+    try {
+    const voitures = await Voiture.find({marque_id : req.params.marque_id});
+    console.log(voitures);
     res.json(voitures);
     } catch (error) {
     res.status(500).json({ message: error.message });

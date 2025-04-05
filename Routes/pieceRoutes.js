@@ -14,7 +14,14 @@ router.post('/Creation', async (req, res) => {
 
 router.get('/Recuperation', async (req, res) => {
     try {
-    const pieces = await Piece.find();
+    const pieces = await Piece.find().populate(
+        {
+            path: 'voiture_id',        // Peupler la voiture associée à la carrosserie
+            populate: {
+              path: 'marque_id',       // Peupler la marque associée à la voiture
+              model: 'Marque'          // Définir que la référence de voiture_id est liée à la collection 'Marque'
+            }
+          });
     res.json(pieces);
     } catch (error) {
     res.status(500).json({ message: error.message });
