@@ -39,6 +39,7 @@ router.post('/login', async (req, res) => {
   }
   });
   router.post('/Creation', async (req, res) => {
+    console.log(req.body);
     try {
       if(req.body.mdp==req.body.mdp1){
         const manager = new Manager(req.body)
@@ -47,6 +48,7 @@ router.post('/login', async (req, res) => {
       }
       else res.json({message: "Verifier votre mot de passe."})
     } catch (error) {
+      console.log(error);
     res.status(400).json({ message: error.message });
     }
   });
