@@ -40,9 +40,6 @@ const verifyToken = (req, res, next) => {
 router.post('/Creation', verifyToken,async (req, res) => {
     try {
     req.body.client_id=req.user._id;
-    const { marque_id, model } = req.body;
-    const voiture= await Voiture.findOne({ marque_id, model });
-    req.body.voiture_id=voiture._id;
     const reservation = new Reservation(req.body);
     await reservation.save();
     res.status(201).json(reservation);
@@ -50,7 +47,22 @@ router.post('/Creation', verifyToken,async (req, res) => {
     res.status(400).json({ message: error.message });
     }
 });
-
+router.get('/RecuperationByid_Client',verifyToken, async (req, res) => {
+    try {
+        const reservation = await Reservation.find({client_id : req.user._id}).populate(
+            {
+              path: 'voiture_id',        // Peupler la voiture associée à la carrosserie
+              populate: {
+                path: 'marque_id',       // Peupler la marque associée à la voiture
+                model: 'Marque'          // Définir que la référence de voiture_id est liée à la collection 'Marque'
+              }
+            });
+        res.json(reservation);
+    } catch (error) {
+        console.log()
+    res.status(500).json({ message: error.message });
+    }
+});
 router.get('/Recuperation', async (req, res) => {
     try {
     const reservation = await Reservation.find();
